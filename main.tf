@@ -1,5 +1,5 @@
-resource "azurerm_shared_image_gallery" "shared_image_gallerys" {
-  for_each = var.shared_image_gallerys
+resource "azurerm_shared_image_gallery" "shared_image_galleries" {
+  for_each = var.shared_image_galleries
 
   location            = each.value.location
   name                = each.value.name

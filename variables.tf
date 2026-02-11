@@ -1,6 +1,6 @@
-variable "shared_image_gallerys" {
+variable "shared_image_galleries" {
   description = <<EOT
-Map of shared_image_gallerys, attributes below
+Map of shared_image_galleries, attributes below
 Required:
     - location
     - name
