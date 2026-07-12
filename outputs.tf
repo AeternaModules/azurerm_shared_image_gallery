@@ -1,3 +1,7 @@
+output "shared_image_galleries_id" {
+  description = "Map of id values across all shared_image_galleries, keyed the same as var.shared_image_galleries"
+  value       = { for k, v in azurerm_shared_image_gallery.shared_image_galleries : k => v.id }
+}
 output "shared_image_galleries_description" {
   description = "Map of description values across all shared_image_galleries, keyed the same as var.shared_image_galleries"
   value       = { for k, v in azurerm_shared_image_gallery.shared_image_galleries : k => v.description }
