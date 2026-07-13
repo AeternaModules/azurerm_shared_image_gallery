@@ -33,30 +33,6 @@ EOT
       permission = string
     }))
   }))
-  validation {
-    condition = alltrue([
-      for k, v in var.shared_image_galleries : (
-        v.sharing == null || (v.sharing.community_gallery == null || (length(v.sharing.community_gallery.eula) > 0))
-      )
-    ])
-    error_message = "must not be empty"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.shared_image_galleries : (
-        v.sharing == null || (v.sharing.community_gallery == null || (length(v.sharing.community_gallery.publisher_email) > 0))
-      )
-    ])
-    error_message = "must not be empty"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.shared_image_galleries : (
-        v.sharing == null || (v.sharing.community_gallery == null || (length(v.sharing.community_gallery.publisher_uri) > 0))
-      )
-    ])
-    error_message = "must not be empty"
-  }
   # --- Unconfirmed validation candidates, derived from azurerm_shared_image_gallery's provider source ---
   # Not auto-enabled: either a bespoke provider validator we can't safely translate,
   # or a path that crosses a list-typed block (needs its own for_each wrapping).
@@ -83,8 +59,17 @@ EOT
   #   source:    location.EnhancedValidate: no recognizable `if ... { errors = append(...) }` pattern - read it by hand
   # path: sharing.permission
   #   source:    validation.StringInSlice value list is not a literal []string - likely a generated PossibleValuesFor*() helper; resolve separately
+  # path: sharing.community_gallery.eula
+  #   condition: length(value) > 0
+  #   message:   must not be empty
   # path: sharing.community_gallery.prefix
   #   source:    [from validate.SharedImageGalleryPrefix] !regexp.MustCompile("^[A-Za-z0-9]{5,16}$").MatchString(value)
+  # path: sharing.community_gallery.publisher_email
+  #   condition: length(value) > 0
+  #   message:   must not be empty
+  # path: sharing.community_gallery.publisher_uri
+  #   condition: length(value) > 0
+  #   message:   must not be empty
   # path: tags
   #   condition: length(value) <= 50
   #   message:   [from tags.Validate: invalid when len(value) > 50]
