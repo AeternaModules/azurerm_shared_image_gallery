@@ -20,7 +20,7 @@ output "shared_image_galleries_resource_group_name" {
 }
 output "shared_image_galleries_sharing" {
   description = "Map of sharing values across all shared_image_galleries, keyed the same as var.shared_image_galleries"
-  value       = { for k, v in azurerm_shared_image_gallery.shared_image_galleries : k => v.sharing if v.sharing != null && length(v.sharing) > 0 }
+  value       = { for k, v in azurerm_shared_image_gallery.shared_image_galleries : k => one(v.sharing) if v.sharing != null && length(v.sharing) > 0 }
 }
 output "shared_image_galleries_tags" {
   description = "Map of tags values across all shared_image_galleries, keyed the same as var.shared_image_galleries"
